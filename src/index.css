@@ -73,7 +73,6 @@ body::-webkit-scrollbar-thumb {
 .phonebook-form {
   display: flex;
   flex-direction: column;
-  gap: 12px;
 }
 .phonebook-input {
   font-size: 20px;
@@ -85,6 +84,11 @@ body::-webkit-scrollbar-thumb {
 .phonebook-input:focus,
 .phonebook-input:hover {
   border-color: rgb(224, 160, 31);
+}
+.phonebook-label {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
 }
 .phonebook-add {
   padding: 12px;

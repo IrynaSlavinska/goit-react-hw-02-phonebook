@@ -1,6 +1,7 @@
 import { Component } from 'react';
-// import { nanoid } from 'nanoid';
 import Contacts from './Contacts';
+import ContactForm from './ContactForm';
+import { nanoid } from 'nanoid';
 
 export class App extends Component {
   state = {
@@ -11,19 +12,18 @@ export class App extends Component {
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
     filter: '',
-    name: '',
-    number: '',
   };
 
-  handleChange = event => {
-    this.setState({ name: event.currentTarget.value });
-  };
+  addContact = (name, number) => {
+    const newContact = {
+      id: nanoid(5),
+      name: name,
+      number: number,
+    };
 
-  submitHandler = e => {
-    e.preventDefault();
-    console.log(this.state);
-
-    this.setState({ name: '' });
+    this.setState(prevState => ({
+      contacts: [...prevState.contacts, newContact],
+    }));
   };
 
   deleteContact = contactIdToDel => {
@@ -34,27 +34,16 @@ export class App extends Component {
     }));
   };
 
+  // formSubmitHandler = (name, number) => {
+  //   console.log(name, number);
+  // };
+
   render() {
     return (
       <div className="container">
         <div className="part-container">
           <h1 className="phonebook-title">Phonebook</h1>
-          <form className="phonebook-form" onSubmit={this.submitHandler}>
-            <label htmlFor="id-9">Name</label>
-            <input
-              type="text"
-              name="name"
-              id="id-9"
-              value={this.state.name}
-              onChange={this.handleChange}
-              required
-              className="phonebook-input"
-            />
-
-            <button type="submit" className="phonebook-add">
-              Add contact
-            </button>
-          </form>
+          <ContactForm onSubmit={this.addContact} />
         </div>
 
         <div className="part-container">
