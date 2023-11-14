@@ -1,7 +1,9 @@
 import { Component } from 'react';
-import Contacts from './Contacts';
-import ContactForm from './ContactForm';
 import { nanoid } from 'nanoid';
+
+import ContactForm from './ContactForm/ContactForm';
+import Contacts from './Contacts/Contacts';
+import Filter from './Filter/Filter';
 
 export class App extends Component {
   state = {
@@ -15,6 +17,13 @@ export class App extends Component {
   };
 
   addContact = (name, number) => {
+    const isExist = this.state.contacts.some(contact => contact.name === name);
+
+    if (isExist) {
+      alert(`${name} is already in contacts`);
+      return;
+    }
+
     const newContact = {
       id: nanoid(5),
       name: name,
@@ -34,11 +43,22 @@ export class App extends Component {
     }));
   };
 
-  // formSubmitHandler = (name, number) => {
-  //   console.log(name, number);
-  // };
+  changeFilter = event => {
+    this.setState({ filter: event.currentTarget.value });
+  };
+
+  getFilteredContacts = () => {
+    const { contacts, filter } = this.state;
+    const normalizedFilter = filter.toLowerCase().trim();
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().trim().includes(normalizedFilter)
+    );
+  };
 
   render() {
+    const { filter } = this.state;
+    const visibleContacts = this.getFilteredContacts();
+
     return (
       <div className="container">
         <div className="part-container">
@@ -48,8 +68,9 @@ export class App extends Component {
 
         <div className="part-container">
           <h2 className="phonebook-subtitle">Contacts</h2>
+          <Filter value={filter} onChange={this.changeFilter} />
           <Contacts
-            contacts={this.state.contacts}
+            contacts={visibleContacts}
             onDeleteContact={this.deleteContact}
           />
         </div>

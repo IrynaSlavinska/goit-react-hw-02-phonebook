@@ -101,3 +101,16 @@ body::-webkit-scrollbar-thumb {
   font-size: 32px;
   margin-bottom: 16px;
 }
+.contact-input {
+  width: 95%;
+  font-size: 20px;
+  padding: 12px;
+  border-radius: 8px;
+  border: 2px solid #a1c487;
+  outline: transparent;
+  margin-bottom: 16px;
+}
+.contact-input:focus,
+.contact-input:hover {
+  border-color: rgb(224, 160, 31);
+}
